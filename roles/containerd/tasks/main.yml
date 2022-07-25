@@ -1,0 +1,28 @@
+---
+# tasks file for containerd
+#
+#
+#
+- name: mkdir for containerd
+  file:
+    path: /etc/containerd
+    state: directory
+    
+- name: unarchive containerd
+  unarchive:
+    src: bin/cri-containerd-cni-1.6.6-linux-amd64.tar.gz
+    dest: /
+
+
+- name: push containerd config file
+  copy:
+    src: config.toml
+    dest: /etc/containerd/config.toml
+
+- name: start containerd
+  systemd:
+    name: containerd
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

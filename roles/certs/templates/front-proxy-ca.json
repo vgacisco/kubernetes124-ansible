@@ -1,0 +1,20 @@
+{
+    "CA": { "expiry": "87600h"},
+    "CN": "kubernetes",
+    "hosts": [
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "US",
+            "ST": "CA",
+            "L": "San Francisco",
+	    "O": "kubernetes",
+	    "OU": "system"
+        }
+    ]
+}
+

@@ -1,0 +1,26 @@
+---
+# tasks file for scheduler
+#
+#
+# version: v1
+# @vgacisco
+#
+- name: push scheduler config file 
+  copy:
+    src: kube-scheduler.service
+    dest: /usr/lib/systemd/system
+
+- name: push scheduler bin config file
+  copy:
+    src: kube-scheduler
+    dest: /usr/local/bin
+    mode: 0755
+
+- name: start service scheduler
+  systemd:
+    name: kube-scheduler
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+

@@ -1,0 +1,40 @@
+[Unit]
+Description=kube-apiserver
+After=network.target
+[Service]
+ExecStart=/usr/local/bin/kube-apiserver  \
+      --advertise-address={{inventory_hostname}}  \
+      --etcd-cafile=/etc/kubernetes/pki/etcd-ca.pem  \
+      --etcd-certfile=/etc/kubernetes/pki/etcd-client.pem  \
+      --etcd-keyfile=/etc/kubernetes/pki/etcd-client-key.pem  \
+      --etcd-servers={% for host in groups['apiservers'] %}https://{{hostvars[host].inventory_hostname}}:2379{% if not loop.last %},{% endif %}{% endfor %} \
+      --bind-address={{inventory_hostname}}  \
+      --secure-port=6443  \
+      --tls-cert-file=/etc/kubernetes/pki/kube-apiserver.pem  \
+      --tls-private-key-file=/etc/kubernetes/pki/kube-apiserver-key.pem  \
+      --anonymous-auth=false  \
+      --client-ca-file=/etc/kubernetes/pki/kubernetes-ca.pem  \
+      --enable-bootstrap-token-auth=true  \
+      --requestheader-allowed-names=aggregator  \
+      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem  \
+      --requestheader-extra-headers-prefix=X-Remote-Extra-  \
+      --requestheader-group-headers=X-Remote-Group  \
+      --requestheader-username-headers=X-Remote-User  \
+      --service-account-issuer=https://kubernetes.default.svc.cluster.local  \
+      --service-account-key-file=/etc/kubernetes/pki/sa.pub  \
+      --authorization-mode=Node,RBAC  \
+      --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota   \
+      --allow-privileged=true  \
+      --enable-aggregator-routing=true  \
+      --kubelet-certificate-authority=/etc/kubernetes/pki/kubernetes-ca.pem  \
+      --kubelet-client-certificate=/etc/kubernetes/pki/kube-apiserver.pem  \
+      --kubelet-client-key=/etc/kubernetes/pki/kube-apiserver-key.pem  \
+      --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.pem  \
+      --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client-key.pem  \
+      --service-account-signing-key-file=/etc/kubernetes/pki/sa.key  \
+      --service-cluster-ip-range=10.200.0.0/16  \
+      --service-node-port-range=30000-40000
+RestartSec=10
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

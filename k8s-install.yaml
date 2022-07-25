@@ -1,0 +1,37 @@
+# 这是自定义版本，
+#
+- hosts: all
+  roles:
+  - basesystem
+  - containerd
+  - nginx
+- hosts: etcds,apiservers
+  roles:
+  - certs
+- hosts: etcds
+  roles:
+  - etcd
+- hosts: apiservers
+  roles:
+  - apiserver
+- hosts: controllers
+  roles:
+  - controller
+- hosts: schedulers
+  roles:
+  - scheduler
+    
+- hosts: yaml
+  roles:
+  - admin
+  - setbootstrap
+
+
+- hosts: nodes
+  roles:
+  - kubelet
+  - proxy
+
+- hosts: yaml
+  roles:
+  - yamlinstall

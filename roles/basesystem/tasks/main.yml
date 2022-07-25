@@ -1,0 +1,118 @@
+---
+# tasks file for roles/basesystem
+#
+# 这个角色用来配置redhat/centos的基本环境
+# 应该用来对所有的主机运行
+# role: basesystem
+# version: v1
+# @ vgacisco
+- name: close firewalld
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: no
+# 关闭swap,selinux功能,开启时间同步 chronyd 
+- name: close swap
+  lineinfile:
+    path: /etc/fstab
+    regexp: '[ ]swap[ ]'
+    line: ""
+- name: close in command
+  shell:
+    swapoff -a;
+    setenforce 0;
+  ignore_errors: yes
+- name: open time server
+  systemd:
+    name: chronyd
+    state: started
+    enabled: yes
+  ignore_errors:
+- name: close selinux 
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: SELINUX=disable
+  ignore_errors:
+
+# 加载模块
+- name: modprobe modes
+  modprobe:
+    name: '{{item}}'
+    state: present
+  loop:
+    - ip_vs
+    - ip_vs_lc
+    - ip_vs_wlc
+    - ip_vs_lblc
+    - ip_vs_lblcr
+    - ip_vs_nq
+    - ip_vs_sed
+    - ip_vs_rr
+    - ip_vs_wrr
+    - ip_vs_sh
+    - ip_vs_dh
+    - br_netfilter
+    - nf_conntrack
+    - ip_tables
+    - iptable_filter
+
+- name: configure modes on system started.
+  lineinfile:
+    create: yes
+    path: /etc/modules-load.d/k8s.conf
+    line: '{{item}}'
+  loop:
+    - ip_vs
+    - ip_vs_lc
+    - ip_vs_wlc
+    - ip_vs_lblc
+    - ip_vs_lblcr
+    - ip_vs_nq
+    - ip_vs_sed
+    - ip_vs_rr
+    - ip_vs_wrr
+    - ip_vs_sh
+    - ip_vs_dh
+    - br_netfilter
+    - nf_conntrack
+    - ip_tables
+    - iptable_filter
+
+# 设置内核参数 
+- name: set sysctl
+  sysctl:
+    name: '{{item}}'
+    value: "1"
+    sysctl_set: yes
+    reload: yes
+  loop:
+    - net.bridge.bridge-nf-call-iptables
+    - net.bridge.bridge-nf-call-ip6tables
+    - net.ipv4.ip_forward
+
+- name: set sysctl 0
+  sysctl:
+    name: '{{item}}'
+    value: "0"
+    sysctl_set: yes
+    reload: yes
+  loop:
+    - net.ipv4.conf.all.rp_filter
+    - net.ipv4.conf.default.rp_filter
+    - vm.swappiness
+
+- name: set hosts
+  copy:
+    src: hosts
+    dest: /etc/hosts
+
+- name: mkdir /etc/kubernetes/pki
+  file:
+    path: '/etc/kubernetes/pki'
+    state: directory
+    recurse: yes
+
+- name: set hostname for host
+  shell: |
+    hostnamectl set-hostname  {{host_name}};

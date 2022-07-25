@@ -1,0 +1,23 @@
+{
+    "CN": "etcd-server",
+    "hosts": [
+	    {% for host in groups['etcds'] %}
+	    "{{hostvars[host].inventory_hostname}}",
+	    {% endfor %}
+	    "127.0.0.1"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "US",
+            "ST": "CA",
+            "L": "San Francisco",
+	    "O": "etcd-server",
+	    "OU": "system"
+        }
+    ]
+}
+

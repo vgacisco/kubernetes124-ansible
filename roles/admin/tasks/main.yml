@@ -1,0 +1,23 @@
+---
+# tasks file for admin
+#
+# version: v1
+#
+# @vgacisco
+#
+- name: mkdir for admin
+  file:
+    path: /root/.kube/
+    state: directory
+- name: push admin config file 
+  copy:
+    src: files/admin.kubeconfig
+    dest: ~/.kube/config
+    mode: 0600
+
+- name: push kubectl 
+  copy:
+    src: bin/kubectl
+    dest: /usr/local/bin
+    mode: 0755
+

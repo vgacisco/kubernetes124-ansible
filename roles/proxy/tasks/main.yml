@@ -1,0 +1,30 @@
+---
+# tasks file for proxy
+#
+# version: v1
+# @ vgacisco
+#
+- name: push systemd file
+  copy: 
+    src: kube-proxy.service
+    dest: /usr/lib/systemd/system/
+
+- name: template proxy config file
+  template:
+    src: kube-proxy.conf.yml.j2
+    dest: /etc/kubernetes/kube-proxy.conf.yml
+
+- name: push proxy bin file
+  copy:
+    src: bin/kube-proxy
+    dest: /usr/local/bin
+    mode: 0755
+
+
+- name: start kube-proxy
+  systemd:
+    name: kube-proxy
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

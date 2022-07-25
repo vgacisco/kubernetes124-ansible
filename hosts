@@ -1,0 +1,29 @@
+[etcds]
+192.168.1.71 host_name='host-1'
+192.168.1.72 host_name='host-2'
+192.168.1.73 host_name='host-3'
+
+[apiservers]
+192.168.1.71 host_name='host-1'
+192.168.1.72 host_name='host-2'
+192.168.1.73 host_name='host-3'
+
+[controllers]
+192.168.1.71 host_name='host-1'
+192.168.1.72 host_name='host-2'
+192.168.1.73 host_name='host-3'
+
+[schedulers]
+192.168.1.71 host_name='host-1'
+192.168.1.72 host_name='host-2'
+192.168.1.73 host_name='host-3'
+
+[nodes]
+192.168.1.71 host_name='host-1'
+192.168.1.72 host_name='host-2'
+192.168.1.73 host_name='host-3'
+
+
+[yaml]
+192.168.1.71 host_name='host-1'
+

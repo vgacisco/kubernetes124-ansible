@@ -1,0 +1,30 @@
+---
+# tasks file for controller
+#
+#
+# version: v1
+# @vgacisco
+#
+- name: copy kube-controller-manager.kubeconfig
+  copy:
+    src: files/kube-controller-manager.kubeconfig
+    dest: /etc/kubernetes
+
+- name: push controller-manager config file for server
+  copy:
+    src: kube-controller-manager.service
+    dest: /usr/lib/systemd/system
+
+- name: push controller-manager bin file 
+  copy:
+    src: kube-controller-manager
+    dest: /usr/local/bin
+    mode: 0755
+
+- name: start kube-controller-manager
+  systemd:
+    name: kube-controller-manager
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

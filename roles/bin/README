@@ -1,0 +1,15 @@
+这个文件 用来放二进制文件 
+
+请下载好kubernetes二进制包，解压后把kube-apiserver,kube-controller-manager,kube-scheduler ,kubelet, kube-proxy放到这个文件平,请注意版本1.24.3
+
+下载 好etcd二进制包，解压 着把etcd放到这个文件夹,请注意 版本尽量新
+
+下载： cri-containerd-cni-1.6.6-linux-amd64.tar.gz 不用解压直接 放到 此文件夹
+
+
+然后进入主目录:
+1, 按格式编写好hosts清单，
+2, 做对远程 主机root免密登录，主机环境 centos8 ,远程主机只要配置好ip 网络，及免密码登录。不用做其它 设置
+
+3, 在主目录执行： ansible-playbook create-certs.yaml 生成密钥
+4, 在主目录 执行： ansible-playbook k8s-install.yaml 就可以完成安装

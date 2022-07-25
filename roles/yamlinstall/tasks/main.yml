@@ -1,0 +1,26 @@
+---
+# tasks file for yamlinstall
+#
+# version: v1
+#
+# @vgacisco
+#
+- name: push net yaml 
+  copy:
+    src: '{{item}}'
+    dest: /root
+  loop:
+    - coredns.yaml
+    - meticrs.yaml
+- name: template calico-etcd.yaml
+  template:
+    src: calico-etcd.yaml
+    dest: /root/calico-etcd.yaml
+
+- name: net yaml install
+  shell:
+    sleep 30;
+    kubectl apply -f /root/calico-etcd.yaml;
+    kubectl apply -f /root/coredns.yaml;
+    kubectl apply -f /root/meticrs.yaml;
+    for i in `kubectl get csr |grep Pending |awk '{print $1}'`;do kubectl certificate approve $i;done;

@@ -1,0 +1,28 @@
+- hosts: localhost
+  tasks:
+  - name: template json 
+    template:
+      src: roles/certs/templates/kube-apiserver.json.j2
+      dest: roles/certs/files/kube-apiserver.json
+    connection: local
+- hosts: localhost
+  tasks:
+  - name: template json 
+    template:
+      src: roles/certs/templates/etcd-server.json.j2
+      dest: roles/certs/files/etcd-server.json
+    connection: local
+
+- hosts: localhost
+  tasks:
+  - name: shell cfssl 
+    shell:
+      bash -c ./cert.sh;
+  connection: local
+
+- hosts: localhost
+  tasks:
+  - name: create hosts
+    template:
+      src: roles/certs/templates/hosts.j2
+      dest: roles/basesystem/files/hosts

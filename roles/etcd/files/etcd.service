@@ -1,0 +1,11 @@
+[Unit]
+Description=etcd
+[Service]
+Type=notify
+ExecStart=/usr/local/bin/etcd --config-file=/etc/kubernetes/etcd.conf.yml
+Restart=on-failure
+RestartSec=10
+LimitNOFILE=65535
+[Install]
+WantedBy=multi-user.target
+Alias=etcd3.service

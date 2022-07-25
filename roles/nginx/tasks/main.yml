@@ -1,0 +1,24 @@
+---
+# tasks file for nginx
+#
+# version: v1
+#
+# @vgacisco
+#
+- name: unarchive nginx 
+  unarchive:
+    src: nginx-centos-8.tar.xz
+    dest: /
+
+- name: update nginx config
+  template:
+    src: nginx.conf.j2
+    dest: /opt/nginx/conf/nginx.conf
+
+- name: start nginx
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

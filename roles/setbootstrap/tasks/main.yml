@@ -1,0 +1,20 @@
+---
+# tasks file for setbootstrap
+#
+# version: v1
+# vgacisco
+#
+- name: push boot-set yaml 
+  copy:
+    src: '{{item}}'
+    dest: /root
+  loop:
+    - bootstrap.yaml
+    - boot-role-binding.yaml
+- name: kubectl apply boot-set
+  shell:
+    sleep 3;
+    kubectl apply -f /root/bootstrap.yaml;
+    kubectl apply -f /root/boot-role-binding.yaml;
+
+

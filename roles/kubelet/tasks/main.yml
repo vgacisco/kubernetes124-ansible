@@ -1,0 +1,29 @@
+---
+# tasks file for kubelet
+#
+- name: template kubelet.service
+  template:
+    src: kubelet.service.j2
+    dest: /usr/lib/systemd/system/kubelet.service
+
+- name: push kubelet config
+  copy:
+    src: '{{item}}'
+    dest: /etc/kubernetes
+  loop:
+    - kubelet.conf.yml
+    - ./files/bootstrap.kubeconfig
+
+- name: push bin file
+  copy:
+    src: bin/kubelet
+    dest: /usr/local/bin
+    mode: 0755
+
+- name: start kubelet 
+  systemd:
+    name: kubelet
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

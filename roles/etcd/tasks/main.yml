@@ -1,0 +1,31 @@
+---
+# tasks file for etcd
+#
+# etcd 角色
+# version: v1
+# @ vgacisco
+#
+- name: cp bin file to server
+  copy:
+    src: etcd
+    dest: /usr/local/bin
+    mode: 0755
+
+- name: template conf file to server
+  template:
+    src: etcd.conf.yml.j2
+    dest: /etc/kubernetes/etcd.conf.yml
+
+
+- name: copy service file to server
+  copy:
+    src: etcd.service
+    dest: /usr/lib/systemd/system/
+
+- name: start etcd.service
+  systemd:
+    name: etcd
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

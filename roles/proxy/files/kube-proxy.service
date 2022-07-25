@@ -1,0 +1,9 @@
+[Unit]
+Description=kube-scheduler
+After=network.target
+[Service]
+ExecStart=/usr/local/bin/kube-proxy --config=/etc/kubernetes/kube-proxy.conf.yml
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target

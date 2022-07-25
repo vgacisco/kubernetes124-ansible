@@ -1,0 +1,25 @@
+---
+# tasks file for apiserver
+#
+# version: v1
+# @ vgacisco
+#
+
+- name: copy bin file to server
+  copy:
+    src: kube-apiserver
+    dest: /usr/local/bin
+    mode: 0755
+
+- name: template config file to server
+  template:
+    src: kube-apiserver.service.j2
+    dest: /usr/lib/systemd/system/kube-apiserver.service
+
+- name: start kube-apiserver
+  systemd:
+    name: kube-apiserver
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

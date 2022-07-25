@@ -1,0 +1,22 @@
+[Unit]
+Description=kube-controller-manager
+After=network.target
+[Service]
+ExecStart=/usr/local/bin/kube-controller-manager \
+      --allocate-node-cidrs=true \
+      --cluster-cidr=172.200.0.0/16 \
+      --controllers=*,bootstrapsigner,tokencleaner \
+      --leader-elect=true \
+      --use-service-account-credentials=true \
+      --client-ca-file=/etc/kubernetes/pki/kubernetes-ca.pem \
+      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem \
+      --cluster-signing-cert-file=/etc/kubernetes/pki/kubernetes-ca.pem \
+      --cluster-signing-key-file=/etc/kubernetes/pki/kubernetes-ca-key.pem \
+      --node-cidr-mask-size=19 \
+      --service-cluster-ip-range=10.200.0.0/16 \
+      --service-account-private-key-file=/etc/kubernetes/pki/sa.key \
+      --kubeconfig=/etc/kubernetes/kube-controller-manager.kubeconfig
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target

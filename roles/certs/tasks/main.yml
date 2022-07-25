@@ -1,0 +1,50 @@
+---
+# tasks file for certs
+# 这个角色用来上传证书
+# 所有证书目前都 是手动生成 
+#
+# version: v1
+# @ vgacisco
+#
+
+# 上传证书
+- name: push cert file
+  copy:
+    src: '{{item}}'
+    dest: '/etc/kubernetes/pki'
+  loop:
+  - admin-key.pem
+  - admin.pem
+  - etcd-ca-key.pem
+  - etcd-ca.pem
+  - etcd-client-key.pem
+  - etcd-client.pem
+  - etcd-server-key.pem
+  - etcd-server.pem
+  - front-proxy-ca-key.pem
+  - front-proxy-ca.pem
+  - front-proxy-client-key.pem
+  - front-proxy-client.pem
+  - kube-apiserver-key.pem
+  - kube-apiserver.pem
+  - kube-controller-manager-key.pem
+  - kube-controller-manager.pem
+  - kube-proxy-key.pem
+  - kube-proxy.pem
+  - kubernetes-ca-key.pem
+  - kubernetes-ca.pem
+  - kube-scheduler-key.pem
+  - kube-scheduler.pem
+  - sa.pub
+  - sa.key
+# 上传 kubeconfig
+- name: push kubeconfig
+  copy:
+    src: '{{item}}'
+    dest: '/etc/kubernetes'
+  loop:
+  - bootstrap.kubeconfig
+  - kube-controller-manager.kubeconfig
+  - kube-proxy.kubeconfig
+  - kube-scheduler.kubeconfig
+

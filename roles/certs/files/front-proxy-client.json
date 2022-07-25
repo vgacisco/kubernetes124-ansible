@@ -1,0 +1,19 @@
+{
+    "CN": "front-proxy-client",
+    "hosts": [
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "US",
+            "ST": "CA",
+            "L": "San Francisco",
+	    "O": "front-proxy-client",
+	    "OU": "system"
+        }
+    ]
+}
+
