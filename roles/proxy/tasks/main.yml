@@ -14,6 +14,11 @@
     src: kube-proxy.conf.yml.j2
     dest: /etc/kubernetes/kube-proxy.conf.yml
 
+- name: copy kube-proxy.kubeconfig
+  copy:
+    src: files/kube-proxy.kubeconfig
+    dest: /etc/kubernetes
+
 - name: push proxy bin file
   copy:
     src: bin/kube-proxy

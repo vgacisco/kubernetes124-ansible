@@ -9,6 +9,10 @@
   copy:
     src: kube-scheduler.service
     dest: /usr/lib/systemd/system
+- name: copy kube-scheduler.kubeconfig
+  copy:
+    src: files/kube-scheduler.kubeconfig
+    dest: /etc/kubernetes
 
 - name: push scheduler bin config file
   copy:
