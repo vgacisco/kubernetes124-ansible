@@ -1,5 +1,7 @@
 ## 	kubernetes 1.24.3  ansible 离线安装版
 
+环境说明：环境请使用radhat 8 / centos 8, 因为其中角色 nginx 使用了1.20.2版本在radhat 8中安装
+
 ## 使用方法
 1, 下载 cri-containerd-cni-1.6.6-linux-amd64.tar.gz,下载后包直接放到本项目 roles/bin 目录之下
 	地址：
