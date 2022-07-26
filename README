@@ -1,17 +1,17 @@
 ## 	kubernetes 1.24.3  ansible 离线安装版
 
-环境说明：环境请使用radhat 8 / centos 8, 因为其中角色 nginx 使用了1.20.2版本在radhat 8中安装
+环境说明：环境请使用radhat 8 / centos 8, 因为其中角色 nginx 使用了1.20.2版本在radhat 8中编译
 
 ## 使用方法
 1, 下载 cri-containerd-cni-1.6.6-linux-amd64.tar.gz,下载后包直接放到本项目 roles/bin 目录之下
 	地址：
 	https://github.com/containerd/containerd/releases/download/v1.6.6/cri-containerd-cni-1.6.6-linux-amd64.tar.gz
-2, 下载 kubernetes1.24.3, etcd 解压后copy可二进制文件 kube-apiserver, kube-controller-manager, kube-schduler, kubelet, kube-proxy, etcd 至本项目 roles/bin下
+2, 下载 kubernetes1.24.3, etcd 解压后copy二进制文件 kube-apiserver, kube-controller-manager, kube-schduler, kubelet, kube-proxy, etcd 至本项目 roles/bin下
 
-3. 安装cfssl,cfssljson程序至运行ansible剧本主机,并做好免密登录，剧本已经配置好ansible环境，使用 ssh-copy-id root@youip 
+3. 安装cfssl,cfssljson,ansible程序至运行ansible剧本主机,并做好免密登录，使用 ssh-copy-id root@youip 
 
-4. cd至本基本，照hosts已有救命修改hosts清单
+4. cd至本项目，照hosts已有参数修改hosts清单
 
 5. 运行以上命令安装
-	`ansible-playbook create-certs.yaml && ansible-playbook k8s-install.yaml`
+	ansible-playbook create-certs.yaml && ansible-playbook k8s-install.yaml
 
