@@ -13,6 +13,7 @@
   - etcd
 - hosts: apiservers
   roles:
+  - admin
   - apiserver
 - hosts: controllers
   roles:
@@ -21,10 +22,10 @@
   roles:
   - scheduler
     
-- hosts: yaml
+- hosts: apiservers
   roles:
-  - admin
   - setbootstrap
+  run_once: true
 
 
 - hosts: nodes
@@ -32,6 +33,7 @@
   - kubelet
   - proxy
 
-- hosts: yaml
+- hosts: apiservers
   roles:
   - yamlinstall
+  run_once: true
