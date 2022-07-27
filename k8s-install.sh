@@ -2,12 +2,12 @@
 
 workdir=`pwd`
 
-echo -n "Are you make no pass to server [yes/no]: "
+echo -n "Are you make no pass login to server [yes/no]: "
 read ansible
 
 if [ "yes" == $ansible ];then
     echo "you say yes"
-    echo -n "input your passwd: "
+    echo -n "input your remote server's root passwd: "
     read -s pass
     export pass
     for host in `cat ./hosts |grep host_name|awk '{print $1}'|sort -u`;do
@@ -46,7 +46,7 @@ else
 fi
 
 export PATH=$PATH:${workdir}/roles/bin
-echo -n " create now certificate for you? [yes/no]: "
+echo -n " create now certificates for you? if you run this shell first. input yes please.!!! [yes/no]: "
 read create_pem
 if [ "yes" == $create_pem ];then
     ansible-playbook create-certs.yaml
