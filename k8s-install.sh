@@ -45,6 +45,17 @@ else
 
 fi
 
+cd ${workdir}/roles/bin
+
+if [ ! -f etcd ];then
+    echo " unarchive kubernetes and etcd "
+    tar xf ./kubernetes-server-* && cp -p ./kubernetes/server/bin/{kube-apiserver, kube-controller-manager, kube-scheduler, kubelet, kube-proxy} .
+    tar xf ./etcd-v3*-linux-amd64* && cp -p ./etcd-v3*/etcd .
+
+fi
+
+cd ${workdir}
+
 export PATH=$PATH:${workdir}/roles/bin
 echo -n " create now certificates for you? if you run this shell first. input yes please.!!! [yes/no]: "
 read create_pem

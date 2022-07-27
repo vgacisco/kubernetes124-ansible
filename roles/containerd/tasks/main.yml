@@ -10,8 +10,11 @@
     
 - name: unarchive containerd
   unarchive:
-    src: bin/cri-containerd-cni-1.6.6-linux-amd64.tar.gz
+    src: '{{item}}'
     dest: /
+  with_fileglob:
+  - "bin/cri-containerd-cni-*"
+
 
 
 - name: push containerd config file
