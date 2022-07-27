@@ -5,11 +5,17 @@
 ## 使用方法
 1, 下载 cri-containerd-cni-1.6.6-linux-amd64.tar.gz,下载后包直接放到本项目 roles/bin 目录之下
 	地址：
+```
 	https://github.com/containerd/containerd/releases/download/v1.6.6/cri-containerd-cni-1.6.6-linux-amd64.tar.gz
+```
 2, 下载 kubernetes1.24.3, etcd 解压后copy二进制文件 kube-apiserver, kube-controller-manager, kube-schduler, kubelet, kube-proxy, etcd 至本项目 roles/bin下
 
 3. 安装expect,cfssl,cfssljson,ansible程序至运行ansible剧的本机(注: 包里带有cfssl 和cfssljson 在路径roles/bin下如果懒只用安装expect）
 
 4. cd至本项目，照hosts已有参数修改hosts清单
 
-5. 运行k8s-install.sh按提示安装
+5. 运行
+	```
+	k8s-install.sh
+	```
+按提示安装
