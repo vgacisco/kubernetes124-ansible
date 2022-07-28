@@ -49,8 +49,10 @@ cd ${workdir}/roles/bin
 
 if [ ! -f etcd ];then
     echo " unarchive kubernetes and etcd "
-    tar xf ./kubernetes-server-* && cp -p ./kubernetes/server/bin/{kube-apiserver, kube-controller-manager, kube-scheduler, kubelet, kube-proxy} .
-    tar xf ./etcd-v3*-linux-amd64* && cp -p ./etcd-v3*/etcd .
+    tar xf ./kubernetes-server-* 
+    cp -p ./kubernetes/server/bin/{kube-apiserver,kube-controller-manager,kube-scheduler,kubelet,kube-proxy,kubectl} .
+    tar xf ./etcd-v3*-linux-amd64* 
+    cp -p ./etcd-v3*/etcd .
 
 fi
 
