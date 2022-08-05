@@ -5,7 +5,10 @@
   template:
     src: kubelet.service.j2
     dest: /usr/lib/systemd/system/kubelet.service
-
+- name: push ca
+  copy:
+    src: files/files/kubernetes-ca.pem
+    dest: /etc/kubernetes/pki
 - name: push kubelet config
   copy:
     src: '{{item}}'
