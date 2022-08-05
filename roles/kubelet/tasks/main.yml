@@ -7,8 +7,12 @@
     dest: /usr/lib/systemd/system/kubelet.service
 - name: push ca
   copy:
-    src: files/files/kubernetes-ca.pem
+    src: '{{item}}'
     dest: /etc/kubernetes/pki
+  loop:
+    - files/files/kubernetes-ca.pem
+    - files/files/front-proxy-ca.pem
+
 - name: push kubelet config
   copy:
     src: '{{item}}'
